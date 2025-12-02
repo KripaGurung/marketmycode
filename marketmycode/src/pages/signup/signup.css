@@ -245,3 +245,19 @@ form .form-step select:focus {
     text-decoration: none;
     font-weight: 500;
 }
+
+.login-redirect {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.login-link {
+    color: #4a7bff;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
