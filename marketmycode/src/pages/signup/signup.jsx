@@ -123,31 +123,31 @@ const Register = () => {
                 <form id="register-form" onSubmit={handleSubmit}>
                     
                     {form.currentStep === 0 && (
-                        <div className="form-step active">
+                        <div className="formStep active">
                             <h3>Account Information</h3>
                             
                             <label>Full Name</label>
-                            <input type="text" value={form.name} onChange={(e) => dispatch(updateField({field: "name", value: e.target.value}))} />
+                            <input type="text" value={form.name} placeholder="Enter Your Full Name" onChange={(e) => dispatch(updateField({field: "name", value: e.target.value}))} />
               
                             <label>Email</label>
-                            <input type="email" value={form.email} onChange={(e) => dispatch(updateField({field: "email", value: e.target.value}))} />
+                            <input type="email" value={form.email} placeholder="Enter Your Email" onChange={(e) => dispatch(updateField({field: "email", value: e.target.value}))} />
               
                             <label>Password</label>
 
                             <div className="password-wrapper">
                                 
-                                <input type={showPassword ? "text" : "password"} value={form.password} onChange={(e) => dispatch(updateField({ field: "password", value: e.target.value }))} />
+                                <input type={showPassword ? "text" : "password"} value={form.password} placeholder="Enter Your Password" onChange={(e) => dispatch(updateField({ field: "password", value: e.target.value }))} />
                                 <button type="button" className="eye-btn" onClick={() => setShowPassword(!showPassword)} > {showPassword ? <FaEyeSlash /> : <FaEye />}</button>
                             </div>
                             
                             <label>Confirm Password</label>
                             
                             <div className="password-wrapper">
-                                <input type={showConfirmPassword ? "text" : "password"} value={form.confirmPassword} onChange={(e) => dispatch(updateField({ field: "confirmPassword", value: e.target.value }))} />
+                                <input type={showConfirmPassword ? "text" : "password"} value={form.confirmPassword} placeholder="Confirm Your Password"onChange={(e) => dispatch(updateField({ field: "confirmPassword", value: e.target.value }))} />
                                 <button type="button" className="eye-btn" onClick={() => setShowConfirmPassword(!showConfirmPassword)} > {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}</button>
                             </div>
 
-                              <div className="buttons">
+                              <div className="sign-buttons">
                                 <button type="button" className="next" onClick={handleNext}>Next</button>
                             </div>
 
@@ -155,20 +155,20 @@ const Register = () => {
                     )}
                     
                     {form.currentStep === 1 && (
-                        <div className="form-step active">
+                        <div className="formStep active">
                             
                             <h3>Personal Details</h3>
                             
                             <label>Username</label>
-                            <input type="text" value={form.userName} onChange={(e) => dispatch(updateField({field: "userName", value: e.target.value}))} />
+                            <input type="text" value={form.userName} placeholder="Enter Your Username" onChange={(e) => dispatch(updateField({field: "userName", value: e.target.value}))} />
 
                             <label>Phone</label>
-                            <input type="tel" value={form.phone} onChange={(e) => dispatch(updateField({field: "phone", value: e.target.value}))} placeholder="Enter Phone Number" />
+                            <input type="tel" value={form.phone} placeholder="Enter Phone Number" onChange={(e) => dispatch(updateField({field: "phone", value: e.target.value}))} />
 
                             <label>Country</label>
-                            <input type="text" value={form.country} onChange={(e) => dispatch(updateField({field: "country", value: e.target.value}))} />
+                            <input type="text" value={form.country} placeholder="Enter Your Country" onChange={(e) => dispatch(updateField({field: "country", value: e.target.value}))} />
 
-                            <div className="buttons">
+                            <div className="sign-buttons">
                                 <button type="button" className="prev" onClick={handlePrev}>Previous</button>
                                 <button type="button" className="next" onClick={handleNext}>Next</button>
                             </div>
@@ -176,7 +176,7 @@ const Register = () => {
                     )}
                     
                     {form.currentStep === 2 && (
-                        <div className="form-step active">
+                        <div className="formStep active">
                             
                             <h3>Preferences</h3>
                             
@@ -201,7 +201,7 @@ const Register = () => {
                                 <option value="advanced">Advanced</option>
                             </select>
                             
-                            <div className="buttons">
+                            <div className="sign-buttons">
                                 <button type="button" className="prev" onClick={handlePrev}>Previous</button>
                                 <button type="button" className="next" onClick={handleNext}>Next</button>
                             </div>
@@ -209,7 +209,7 @@ const Register = () => {
                     )}
                     
                     {form.currentStep === 3 && (  
-                        <div className="form-step active">
+                        <div className="formStep active">
                             
                             <h3>Confirm & Submit</h3>
                             
@@ -222,7 +222,7 @@ const Register = () => {
                                 </div>
                             </div>
                             
-                            <div className="buttons">
+                            <div className="sign-buttons">
                                 <button type="button" className="prev" onClick={handlePrev}>Previous</button>
                                 <button type="submit">Create Account</button>
                             </div>
@@ -230,7 +230,7 @@ const Register = () => {
                     )}
 
                       <p className="login-redirect">Already have an account?{" "} <span onClick={() => navigate("/")} className="login-link">Login</span></p>
-                      
+
                 </form>
             </div>
         </div>

@@ -64,11 +64,11 @@ body {
     background: #2e7d32;
 }
 
-form .form-step {
+form .formStep {
     display: none;
 }
 
-form .form-step.active {
+form .formStep.active {
     display: block;
     animation: fadeIn 0.3s ease-in-out;
 }
@@ -85,24 +85,25 @@ form .form-step.active {
     }
 }
 
-form .form-step h3 {
+form .formStep h3 {
     text-align: center;
     color: #1b5e20;
     margin-bottom: 1rem;
 }
 
-form .form-step label {
-    display: block;
-    margin-top: 0.8rem;
+form .formStep label {
+    margin: 10px 0 5px;
+    font-weight: 600;
     color: #333;
-    font-size: 0.9rem;
+    display: block;
+    text-align: left;
 }
 
-form .form-step input[type=text],
-form .form-step input[type=email],
-form .form-step input[type=password],
-form .form-step input[type=tel],
-form .form-step select {
+form .formStep input[type=text],
+form .formStep input[type=email],
+form .formStep input[type=password],
+form .formStep input[type=tel],
+form .formStep select {
     width: 100%;
     padding: 0.6rem;
     margin-top: 0.3rem;
@@ -111,11 +112,11 @@ form .form-step select {
     outline: none;
 }
 
-form .form-step input[type=text]:focus,
-form .form-step input[type=email]:focus,
-form .form-step input[type=password]:focus,
-form .form-step input[type=tel]:focus,
-form .form-step select:focus {
+form .formStep input[type=text]:focus,
+form .formStep input[type=email]:focus,
+form .formStep input[type=password]:focus,
+form .formStep input[type=tel]:focus,
+form .formStep select:focus {
     border-color: #2e7d32;
 }
 
@@ -131,9 +132,9 @@ form .form-step select:focus {
 }
 
 .eye-btn {
-    margin-top: 5px;
     position: absolute;
     right: 10px;
+    margin-top: 5px;
     background: none;
     border: none;
     cursor: pointer;
@@ -174,13 +175,13 @@ form .form-step select:focus {
     margin-top: 0.4rem;
 }
 
-.buttons {
+.sign-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 1.5rem;
 }
 
-.buttons button {
+.sign-buttons button {
     background: #2e7d32;
     color: white;
     border: none;
@@ -190,15 +191,15 @@ form .form-step select:focus {
     transition: background 0.3s;
 }
 
-.buttons button:hover {
+.sign-buttons button:hover {
     background: #1b5e20;
 }
 
-.buttons button.prev {
+.sign-buttons button.prev {
     background: #66bb6a;
 }
 
-.buttons button.prev:hover {
+.sign-buttons button.prev:hover {
     background: #388e3c;
 }
 
@@ -244,20 +245,4 @@ form .form-step select:focus {
     color: #2e7d32;
     text-decoration: none;
     font-weight: 500;
-}
-
-.login-redirect {
-    text-align: center;
-    margin-bottom: 15px;
-    font-size: 14px;
-}
-
-.login-link {
-    color: #4a7bff;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.login-link:hover {
-    text-decoration: underline;
 }
