@@ -119,6 +119,27 @@ form .form-step select:focus {
     border-color: #2e7d32;
 }
 
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.eye-btn {
+    margin-top: 5px;
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
 .interests-options {
     margin-top: 1rem;
     display: grid;
@@ -145,8 +166,6 @@ form .form-step select:focus {
 .interests-options .interest-option label {
     cursor: pointer;
     margin: 0;
-    -webkit-user-select: none;
-    -moz-user-select: none;
     user-select: none;
     display: inline-block;
 }
@@ -176,11 +195,11 @@ form .form-step select:focus {
 }
 
 .buttons button.prev {
-    background: #2e7d32;
+    background: #66bb6a;
 }
 
 .buttons button.prev:hover {
-    background: #66bb6a;
+    background: #388e3c;
 }
 
 .terms-box {
@@ -217,8 +236,6 @@ form .form-step select:focus {
 
 .terms-box .terms-container label {
     cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
     user-select: none;
     margin: 0;
 }
