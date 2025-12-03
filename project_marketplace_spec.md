@@ -93,6 +93,7 @@ Errors:
 ```json
 {
   "name": "Sagar",
+  "username": "sagar",
   "email": "sagar@example.com",
   "password": "12345678"
 }
@@ -115,7 +116,7 @@ Errors:
 **Request**
 ```json
 {
-  "email": "sagar@example.com",
+  "username": "sagar",
   "password": "12345678"
 }
 ```

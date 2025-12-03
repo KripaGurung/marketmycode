@@ -1,5 +1,6 @@
 User = {
     "test": {
+        "id": "123",
         "username": "test",
         "fullname": "testUser",
         "email": "test@example.com",

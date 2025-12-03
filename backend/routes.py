@@ -24,7 +24,14 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
     access_token = create_access_token(data={"sub": user.username})
-    return Token(access_token=access_token, token_type="bearer")
+    return {
+        "success": True,
+        "data": {
+            "user_id": user.id,
+            "token": access_token,
+            "refresh_token": "refresh_token",
+        },
+    }
 
 
 @auth_router.post("/signup")
