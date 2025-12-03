@@ -6,12 +6,14 @@ from auth import (
     SECRET_KEY,
     authenticate_user,
     create_access_token,
+    create_refresh_token,
+    decode_token,
     get_current_user,
     oauth2_scheme,
 )
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Body, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from models import Token
+from models import RefreshRequest, Token
 from models import User as UserModel
 from test_db import User
 
@@ -24,12 +26,14 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
     access_token = create_access_token(data={"sub": user.username})
+    refresh_token = create_refresh_token(data={"sub": user.username})
+
     return {
         "success": True,
         "data": {
             "user_id": user.id,
             "token": access_token,
-            "refresh_token": "refresh_token",
+            "refresh_token": refresh_token,
         },
     }
 
@@ -40,8 +44,24 @@ def signup():
 
 
 @auth_router.post("/refresh")
-def refresh():
-    pass
+async def refresh(refresh_token: RefreshRequest):
+    try:
+        payload = decode_token(refresh_token.refresh_token)
+        username = payload.get("sub")
+        print("USERNAME", username)
+        print("TOKEN", username)
+        if username is None:
+            raise HTTPException(status_code=400, detail="Invalid token")
+
+        access_token = create_access_token(data={"sub": username})
+        return {
+            "success": True,
+            "data": {
+                "access_token": access_token,
+            },
+        }
+    except jwt.PyJWTError:
+        raise HTTPException(status_code=400, detail="Invalid token")
 
 
 @auth_router.post("/logout")

@@ -10,6 +10,10 @@ class TokenData(BaseModel):
     username: str | None = None
 
 
+class RefreshRequest(BaseModel):
+    refresh_token: str
+
+
 class User(BaseModel):
     id: str
     username: str
