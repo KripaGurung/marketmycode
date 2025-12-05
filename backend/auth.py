@@ -60,16 +60,18 @@ def hash_password(password):
     return password_hash.hash(password)
 
 
-def authenticate_user(user: dict, username: str, password: str):
-    if username not in user:
+async def authenticate_user(users_collection, username: str, password: str):
+    user = await users_collection.find_one({"username": username})
+    if not user:
+        return False
+    if not verify_password(password, user["hashed_password"]):
         return False
 
-    print(user[username]["hashed_password"])
-    print(".\n")
-    print(password)
-    if not verify_password(password, user[username]["hashed_password"]):
-        return False
-    return UserInDB(**user[username])
+    # MongoDB returns "_id", but Pydantic expects "id"
+    user["id"] = str(user["_id"])
+    del user["_id"]
+    print(user)
+    return user
 
 
 def get_current_user(

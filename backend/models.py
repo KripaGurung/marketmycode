@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 
 class Token(BaseModel):
@@ -15,7 +15,6 @@ class RefreshRequest(BaseModel):
 
 
 class User(BaseModel):
-    id: str
     username: str
     email: str
     fullname: str
@@ -23,3 +22,16 @@ class User(BaseModel):
 
 class UserInDB(User):
     hashed_password: str
+
+
+class signupRequest(BaseModel):
+    username: str
+    email: EmailStr
+    fullname: str
+    password: str
+
+
+class signupResponse(BaseModel):
+    id: str
+    access_token: str
+    refresh_token: str
