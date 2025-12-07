@@ -1,10 +1,10 @@
 import React from 'react';
-// import Header from "../../component/Header/Header.jsx";
+import Header from "../../component/Header/Header.jsx";
 
 const Home = () => {
     return (
         <div>
-            {/* <Header /> */}
+            <Header />
         </div>
     )
 }

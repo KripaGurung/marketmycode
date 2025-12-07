@@ -1,0 +1,78 @@
+/****** PAGE BACKGROUND ******/
+.hero {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 60px 0;
+    background: #e3fde7;
+}
+
+/****** CARD CONTAINER ******/
+.hero-card {
+    width: 1200px;
+    min-height: 450px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    padding: 50px 60px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    gap: 40px;
+}
+
+/****** LEFT CONTENT ******/
+.hero-left {
+    flex: 1;
+    max-width: 550px;
+}
+
+.hero-left h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #0e5c35;
+    margin-bottom: 20px;
+}
+
+.hero-left p {
+    font-size: 15px;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 15px;
+}
+
+/****** BUTTONS ******/
+.btn-primary {
+    background: #0e5c35;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-outline {
+    padding: 10px 25px;
+    background: transparent;
+    border: 2px solid #0e5c35;
+    color: #0e5c35;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/****** RIGHT IMAGE ******/
+.hero-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-right img {
+    width: 430px;
+    max-width: 100%;
+    object-fit: contain;
+}
