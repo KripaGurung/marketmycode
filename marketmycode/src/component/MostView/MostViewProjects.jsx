@@ -6,9 +6,9 @@ const MostViewProjects = () => {
 
   return (
     <div className="mostSection">
-      <h2 className="mostTitle">Featured Projects</h2>
+      <h2 className="mostTitle">Most View Projects</h2>
       <p className="mostSubtitle">
-        Turn your imagination into something real.
+        See what others are finding interesting !
       </p>
 
       <div className="mostProjectWrapper">
@@ -18,20 +18,20 @@ const MostViewProjects = () => {
 
             <div className="mostProjectInfo">
               <div className="mostTagBox">
-                <span className="tag">AI</span>
-                <span className="tag price">RS 200</span>
+                <span className="mostTag">AI</span>
+                <span className="mostTagPrice">RS 200</span>
               </div>
 
-              <p className="projectDesc">
+              <p className="mostProjectDesc">
                 This project is a Project Marketplace Platform where users can
                 discover, explore, and share various projects across different
                 categories. It promotes collaboration and learning in the
                 developer community.
               </p>
 
-              <div className="projectButtons">
-                <button className="viewBtn">View Details</button>
-                <button className="cartBtn">Add to cart</button>
+              <div className="mostProjectButtons">
+                <button className="mostViewBtn">View Details</button>
+                <button className="mostCartBtn">Add to cart</button>
               </div>
             </div>
           </div>
