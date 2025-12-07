@@ -10,7 +10,7 @@ const Header = () => {
     <section className="hero">
       <div className="hero-card">
 
-        {/* LEFT SIDE */}
+  
         <div className="hero-left">
           <h1>Innovation at Your Fingertips</h1>
 
@@ -23,16 +23,12 @@ const Header = () => {
           </p>
 
           <div className="hero-actions">
-            <button className="btn-primary" onClick={() => navigate("/projects")}>
-              Explore Projects
-            </button>
-            <button className="btn-outline" onClick={() => navigate("/create")}>
-              Start Creating
-            </button>
+            <button className="btn-primary" onClick={() => navigate("/projects")}> Explore Projects </button>
+            <button className="btn-outline" onClick={() => navigate("/create")}>  Start Creating </button>
           </div>
         </div>
 
-        {/* RIGHT SIDE IMAGE */}
+
         <div className="hero-right">
           <img src={assets.home} alt="hero" />
         </div>

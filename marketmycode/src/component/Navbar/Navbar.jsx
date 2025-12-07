@@ -17,7 +17,7 @@ const Navbar = () => {
         </ul>
 
         <div className="nav-section">
-          <button onClick={() => navigate("/login")} className="Button">Login</button>
+          <button onClick={() => navigate("/")} className="Button">Login</button>
         </div>
       </nav>
     </div>
