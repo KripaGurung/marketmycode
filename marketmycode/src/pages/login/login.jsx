@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "./loginSlice";
 import "./login.css";
+import ForgotPasswordPopup from "../../component/ForgotPasswordPopup/ForgotPasswordPopup";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,12 +32,13 @@ const Login = () => {
                     <label htmlFor="password">Password</label>
                     <input type="password" id="password" placeholder="Enter Your Password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
                 </div>
-
+                
                 <div className="remember-forgot">
-                    <label>
-                        <input type="checkbox" /> Remember me
-                    </label>
-                    <a href="#">Forgot password?</a>
+                    
+                    <label> <input type="checkbox" /> Remember me </label>
+                    
+                    <span className="forgot-link" onClick={() => setShowPopup(true)}> Forgot password? </span>
+                
                 </div>
                 
                 <div className="buttons">
@@ -45,6 +48,9 @@ const Login = () => {
                 <p>Don't have an account?{" "}<span onClick={() => navigate("/signup")} className="login-link">Register</span></p>
 
             </form>
+
+             {showPopup && <ForgotPasswordPopup onClose={() => setShowPopup(false)} />}
+
         </div>
     );
 };

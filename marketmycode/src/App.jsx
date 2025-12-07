@@ -4,8 +4,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Signup from './pages/signup/signup.jsx';
 import Login from './pages/login/login.jsx';
-import Navbar from './component/Navbar/Navbar.jsx'
-import Home from './pages/home/home.jsx'
+import Navbar from './component/Navbar/Navbar.jsx';
+import Home from './pages/home/home.jsx';
 
 
 function AppContent() {
