@@ -1,4 +1,4 @@
-import home from './home.jpg';
+import home from './home.png';
 
 export const assets = {
     home
