@@ -1,12 +1,20 @@
-from quopri import decode
+import os
 
-from auth import create_access_token, decode_access_token, hash_password
+import resend
 
-password = hash_password("password")
-print(password)
-# print(create_access_token({"sub": password}))
-# print(
-# decode_access_token(
-#     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidGVzdCIsImV4cCI6MTc2NDczOTU1M30.Xbp0uFWsI_jsjYuKMxfevYuCWgBZp_xmvaK30O41AJE"
-# )
-# )
+resend.api_key = "api_key "
+
+params = {
+    "from": "onboarding@resend.dev",
+    "to": ["np03cs4a220493@heraldcollege.edu.np"],
+    'template': {
+        'id': "untitled-template",
+        "variables": {
+            "url": f"https://example.com/{}",
+            "user": f"{user}"
+        }
+    }
+}
+
+email = resend.Emails.send(params)
+print(email)

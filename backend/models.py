@@ -35,3 +35,21 @@ class signupResponse(BaseModel):
     id: str
     access_token: str
     refresh_token: str
+
+
+# Forget Password Model
+
+
+class ForgetPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+# Reset Password Model
+
+
+class ResetPasswordRequest(BaseModel):
+    password: str
+
+
+class ResetPasswordResponse(BaseModel):
+    message: str

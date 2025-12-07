@@ -15,8 +15,17 @@ from auth import (
 from db import users_collection
 from fastapi import APIRouter, Body, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from models import RefreshRequest, Token, UserInDB, signupRequest
+from models import (
+    ForgetPasswordRequest,
+    RefreshRequest,
+    ResetPasswordRequest,
+    ResetPasswordResponse,
+    Token,
+    UserInDB,
+    signupRequest,
+)
 from models import User as UserModel
+from sendMail import sendMail
 
 auth_router = APIRouter(prefix="/auth")
 
@@ -100,3 +109,33 @@ def logout():
 def test(current_user: Annotated[UserModel, Depends(oauth2_scheme)]):
     user = get_current_user(token=current_user)
     return user
+
+
+# Forget Password Route
+@auth_router.post("/forget-password")
+async def forget_password(request: ForgetPasswordRequest):
+    user = await users_collection.find_one({"email": request.email})
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not Found!")
+    else:
+        token = create_access_token(data={"sub": user["email"]})
+        sendMail(user["email"], token)
+        return {"success": True, "message": "Password reset email sent!"}
+
+
+# Reset Password Route
+@auth_router.post("/reset-password")
+async def reset_password(token: str, request: ResetPasswordRequest):
+    try:
+        payload = decode_token(token)
+        email = payload.get("sub")
+        user = await users_collection.find_one({"email": email})
+        if user is None:
+            raise HTTPException(status_code=404, detail="User not Found!")
+        hashed_password = hash_password(request.password)
+        await users_collection.update_one(
+            {"email": email}, {"$set": {"password": hashed_password}}
+        )
+        return {"success": True, "message": "Password reset successfully!"}
+    except jwt.PyJWTError:
+        raise HTTPException(status_code=400, detail="Invalid token")
