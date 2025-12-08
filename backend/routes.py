@@ -12,11 +12,13 @@ from auth import (
     hash_password,
     oauth2_scheme,
 )
+from bson import ObjectId
 from db import projects_collection, users_collection
 from fastapi import APIRouter, Body, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from models import (
     ForgetPasswordRequest,
+    ProjectDetailResponse,
     ProjectInDB,
     ProjectMetadataRequest,
     ProjectResponse,
@@ -175,3 +177,16 @@ async def get_projects():
         cleaned_projects.append(ProjectResponse(**doc))
 
     return cleaned_projects
+
+
+# Get a specific project
+@router.get("/projects/{project_id}", response_model=ProjectDetailResponse)
+async def get_project_detail(project_id: str):
+    project = await projects_collection.find_one({"_id": ObjectId(project_id)})
+
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+
+    # 2. Return directly!
+    # Pydantic automatically maps '_id' -> 'id' and 'owner_id' -> 'owner_id'
+    return project

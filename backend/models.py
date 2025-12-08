@@ -1,10 +1,14 @@
 from enum import Enum
 from optparse import TitledHelpFormatter
 from types import ClassMethodDescriptorType
-from typing import List, Optional
+from typing import Annotated, List, Optional
 
 from bson import ObjectId
-from pydantic import BaseModel, ConfigDict, EmailStr, HttpUrl
+from pydantic import BaseModel, BeforeValidator, ConfigDict, EmailStr, Field, HttpUrl
+
+# VERY USEFUL REMEBER TO USE IT LIKE THIS IN THE FUTURE TOO
+# Helper for ObjectId -> str
+PyObjectId = Annotated[str, BeforeValidator(str)]
 
 
 class Token(BaseModel):
@@ -96,3 +100,19 @@ class ProjectResponse(BaseModel):
     price: float
     rating: float
     demo_link: HttpUrl
+
+
+# projects/id GET
+
+
+class ProjectDetailResponse(BaseModel):
+    # Map _id to id
+    id: PyObjectId = Field(alias="_id")
+
+    title: str
+    description: str
+    price: float
+    demo_link: Optional[str] = None
+    owner_id: str
+    owner_username: str
+    reviews: list = []
