@@ -11,3 +11,4 @@ client = AsyncIOMotorClient(MONGO_URI)
 db = client["marketmycode"]
 
 users_collection = db["users"]
+projects_collection = db["projects"]

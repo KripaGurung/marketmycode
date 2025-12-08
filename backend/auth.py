@@ -1,7 +1,8 @@
 from socket import has_ipv6
 from typing import Annotated
 
-from fastapi import Depends
+from db import users_collection
+from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from models import Token, TokenData, UserInDB
 from pwdlib import PasswordHash
@@ -11,7 +12,6 @@ from datetime import datetime, timedelta, timezone
 
 import jwt
 from jwt.exceptions import InvalidTokenError
-from test_db import User
 
 SECRET_KEY = "8ec7d5f922b1a18d87a04077aa4c61abf184733415c91eed00ff43116806953d"
 ALGORITHM = "HS256"
@@ -74,19 +74,30 @@ async def authenticate_user(users_collection, username: str, password: str):
     return user
 
 
-def get_current_user(
+async def get_current_user(
     token: Annotated[str, Depends(oauth2_scheme)],
 ):
     try:
         payload = decode_token(token)
         username = payload.get("sub")
-        if username is None:
-            raise InvalidTokenError
 
-        for user_dict in User.values():
-            if user_dict["username"] == username:
-                return UserInDB(**user_dict)
+        if username is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
+            )
+
+        user_dict = await users_collection.find_one({"username": username})
+        if user_dict["username"] == username:
+            user_dict["id"] = str(user_dict["_id"])
+            return user_dict
+
+        # If loop finishes without finding user
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
 
     except InvalidTokenError:
-        raise InvalidTokenError
-    return
+        # If JWT library fails (expired, fake signature, etc)
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
+        )

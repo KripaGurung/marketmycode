@@ -1,4 +1,10 @@
-from pydantic import BaseModel, EmailStr
+from enum import Enum
+from optparse import TitledHelpFormatter
+from types import ClassMethodDescriptorType
+from typing import List, Optional
+
+from bson import ObjectId
+from pydantic import BaseModel, ConfigDict, EmailStr, HttpUrl
 
 
 class Token(BaseModel):
@@ -53,3 +59,40 @@ class ResetPasswordRequest(BaseModel):
 
 class ResetPasswordResponse(BaseModel):
     message: str
+
+
+# Project Model
+
+
+# Define the choices
+class CourseLevel(str, Enum):
+    BEGINNER = "Beginner"
+    INTERMEDIATE = "Intermediate"
+    ADVANCED = "Advanced"
+
+
+# /projects POST
+class ProjectMetadataRequest(BaseModel):
+    title: str
+    description: str
+    category: str
+    tech_stack: List[str]  # Handles ["React", "Node"]
+    level: CourseLevel  # Handles the specific choices
+    price: float
+    github_link: Optional[HttpUrl] = None
+    demo_link: Optional[HttpUrl] = None
+
+
+class ProjectInDB(ProjectMetadataRequest):
+    owner_id: str
+    owner_username: str
+    rating: float
+
+
+# /projects GET
+class ProjectResponse(BaseModel):
+    id: str
+    title: str
+    price: float
+    rating: float
+    demo_link: HttpUrl

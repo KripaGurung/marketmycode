@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, List
 
 import jwt
 from auth import (
@@ -12,11 +12,14 @@ from auth import (
     hash_password,
     oauth2_scheme,
 )
-from db import users_collection
+from db import projects_collection, users_collection
 from fastapi import APIRouter, Body, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from models import (
     ForgetPasswordRequest,
+    ProjectInDB,
+    ProjectMetadataRequest,
+    ProjectResponse,
     RefreshRequest,
     ResetPasswordRequest,
     ResetPasswordResponse,
@@ -28,6 +31,7 @@ from models import User as UserModel
 from sendMail import sendMail
 
 auth_router = APIRouter(prefix="/auth")
+router = APIRouter()
 
 
 @auth_router.post("/login")
@@ -139,3 +143,35 @@ async def reset_password(token: str, request: ResetPasswordRequest):
         return {"success": True, "message": "Password reset successfully!"}
     except jwt.PyJWTError:
         raise HTTPException(status_code=400, detail="Invalid token")
+
+
+# Create Project Route
+@router.post("/projects")
+async def create_project(
+    request: ProjectMetadataRequest, current_user: UserInDB = Depends(get_current_user)
+):
+    new_project = ProjectInDB(
+        **request.dict(),
+        owner_id=current_user["id"],
+        owner_username=current_user["username"],
+        rating=0.0,
+    )
+    await projects_collection.insert_one(new_project.model_dump(mode="json"))
+    return {"success": True, "message": "Project created successfully!"}
+
+
+# Get Projects Route
+
+
+@router.get("/projects", response_model=List[ProjectResponse])
+async def get_projects():
+    # (returns a list of dictionaries with '_id')
+    raw_projects = await projects_collection.find().to_list(100)
+
+    cleaned_projects = []
+    for doc in raw_projects:
+        # Fix: Convert ObjectId to string and map '_id' -> 'id'
+        doc["id"] = str(doc.pop("_id"))
+        cleaned_projects.append(ProjectResponse(**doc))
+
+    return cleaned_projects

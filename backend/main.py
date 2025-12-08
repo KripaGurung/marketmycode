@@ -2,7 +2,7 @@ from typing import Union
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
-from routes import auth_router
+from routes import auth_router, router
 
 app = FastAPI()
 
@@ -19,3 +19,4 @@ async def http_exception_handler(request, exc: HTTPException):
 
 
 app.include_router(auth_router)
+app.include_router(router)
