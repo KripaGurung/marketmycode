@@ -1,3 +1,4 @@
+from abc import update_abstractmethods
 from typing import Annotated, List
 
 import jwt
@@ -22,6 +23,7 @@ from models import (
     ProjectInDB,
     ProjectMetadataRequest,
     ProjectResponse,
+    ProjectUpdateRequest,
     RefreshRequest,
     ResetPasswordRequest,
     ResetPasswordResponse,
@@ -189,4 +191,48 @@ async def get_project_detail(project_id: str):
 
     # 2. Return directly!
     # Pydantic automatically maps '_id' -> 'id' and 'owner_id' -> 'owner_id'
+    return project
+
+
+# Update a specific project
+@router.patch("/projects/{project_id}", response_model=ProjectDetailResponse)
+async def update_project(
+    project_id: str,
+    request: ProjectUpdateRequest,
+    current_user: UserInDB = Depends(get_current_user),
+):
+    project = await projects_collection.find_one({"_id": ObjectId(project_id)})
+
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+
+    if str(project["owner_id"]) != current_user["id"]:
+        raise HTTPException(status_code=403, detail="Unauthorized")
+
+    await projects_collection.update_one(
+        {"_id": ObjectId(project_id)},
+        {"$set": request.model_dump(exclude_unset=True, mode="json")},
+    )
+
+    updated_data = await projects_collection.find_one({"_id": ObjectId(project_id)})
+
+    return updated_data
+
+
+# delete a specific project
+@router.delete("/projects/{project_id}", response_model=ProjectDetailResponse)
+async def delete_project(
+    project_id: str,
+    current_user: UserInDB = Depends(get_current_user),
+):
+    project = await projects_collection.find_one({"_id": ObjectId(project_id)})
+
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+
+    if str(project["owner_id"]) != current_user["id"]:
+        raise HTTPException(status_code=403, detail="Unauthorized")
+
+    await projects_collection.delete_one({"_id": ObjectId(project_id)})
+
     return project

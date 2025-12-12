@@ -111,8 +111,28 @@ class ProjectDetailResponse(BaseModel):
 
     title: str
     description: str
+    category: str  # <--- ADDED
+    tech_stack: List[str]  # <--- ADDED
+    level: CourseLevel  # <--- ADDED
     price: float
-    demo_link: Optional[str] = None
+    demo_link: Optional[HttpUrl] = None
+    github_link: Optional[HttpUrl] = None
     owner_id: str
     owner_username: str
+    rating: float  # <--- ADDED
     reviews: list = []
+
+    # Add Config for Pydantic to allow the alias
+    model_config = ConfigDict(populate_by_name=True)
+
+
+# projects/id PATCH
+class ProjectUpdateRequest(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    price: Optional[float] = None
+    demo_link: Optional[HttpUrl] = None
+    github_link: Optional[HttpUrl] = None
+    category: Optional[str] = None
+    tech_stack: Optional[List[str]] = None
+    level: Optional[CourseLevel] = None
