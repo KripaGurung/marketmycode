@@ -1,4 +1,5 @@
-from typing import Annotated
+from abc import update_abstractmethods
+from typing import Annotated, List
 
 import jwt
 from auth import (
@@ -12,13 +13,29 @@ from auth import (
     hash_password,
     oauth2_scheme,
 )
-from db import users_collection
+from bson import ObjectId
+from db import projects_collection, users_collection
 from fastapi import APIRouter, Body, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from models import RefreshRequest, Token, UserInDB, signupRequest
+from models import (
+    ForgetPasswordRequest,
+    ProjectDetailResponse,
+    ProjectInDB,
+    ProjectMetadataRequest,
+    ProjectResponse,
+    ProjectUpdateRequest,
+    RefreshRequest,
+    ResetPasswordRequest,
+    ResetPasswordResponse,
+    Token,
+    UserInDB,
+    signupRequest,
+)
 from models import User as UserModel
+from sendMail import sendMail
 
 auth_router = APIRouter(prefix="/auth")
+router = APIRouter()
 
 
 @auth_router.post("/login")
@@ -100,3 +117,122 @@ def logout():
 def test(current_user: Annotated[UserModel, Depends(oauth2_scheme)]):
     user = get_current_user(token=current_user)
     return user
+
+
+# Forget Password Route
+@auth_router.post("/forget-password")
+async def forget_password(request: ForgetPasswordRequest):
+    user = await users_collection.find_one({"email": request.email})
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not Found!")
+    else:
+        token = create_access_token(data={"sub": user["email"]})
+        sendMail(user["email"], token)
+        return {"success": True, "message": "Password reset email sent!"}
+
+
+# Reset Password Route
+@auth_router.post("/reset-password")
+async def reset_password(token: str, request: ResetPasswordRequest):
+    try:
+        payload = decode_token(token)
+        email = payload.get("sub")
+        user = await users_collection.find_one({"email": email})
+        if user is None:
+            raise HTTPException(status_code=404, detail="User not Found!")
+        hashed_password = hash_password(request.password)
+        await users_collection.update_one(
+            {"email": email}, {"$set": {"password": hashed_password}}
+        )
+        return {"success": True, "message": "Password reset successfully!"}
+    except jwt.PyJWTError:
+        raise HTTPException(status_code=400, detail="Invalid token")
+
+
+# Create Project Route
+@router.post("/projects")
+async def create_project(
+    request: ProjectMetadataRequest, current_user: UserInDB = Depends(get_current_user)
+):
+    new_project = ProjectInDB(
+        **request.dict(),
+        owner_id=current_user["id"],
+        owner_username=current_user["username"],
+        rating=0.0,
+    )
+    await projects_collection.insert_one(new_project.model_dump(mode="json"))
+    return {"success": True, "message": "Project created successfully!"}
+
+
+# Get Projects Route
+
+
+@router.get("/projects", response_model=List[ProjectResponse])
+async def get_projects():
+    # (returns a list of dictionaries with '_id')
+    raw_projects = await projects_collection.find().to_list(100)
+
+    cleaned_projects = []
+    for doc in raw_projects:
+        # Fix: Convert ObjectId to string and map '_id' -> 'id'
+        doc["id"] = str(doc.pop("_id"))
+        cleaned_projects.append(ProjectResponse(**doc))
+
+    return cleaned_projects
+
+
+# Get a specific project
+@router.get("/projects/{project_id}", response_model=ProjectDetailResponse)
+async def get_project_detail(project_id: str):
+    project = await projects_collection.find_one({"_id": ObjectId(project_id)})
+
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+
+    # 2. Return directly!
+    # Pydantic automatically maps '_id' -> 'id' and 'owner_id' -> 'owner_id'
+    return project
+
+
+# Update a specific project
+@router.patch("/projects/{project_id}", response_model=ProjectDetailResponse)
+async def update_project(
+    project_id: str,
+    request: ProjectUpdateRequest,
+    current_user: UserInDB = Depends(get_current_user),
+):
+    project = await projects_collection.find_one({"_id": ObjectId(project_id)})
+
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+
+    if str(project["owner_id"]) != current_user["id"]:
+        raise HTTPException(status_code=403, detail="Unauthorized")
+
+    await projects_collection.update_one(
+        {"_id": ObjectId(project_id)},
+        {"$set": request.model_dump(exclude_unset=True, mode="json")},
+    )
+
+    updated_data = await projects_collection.find_one({"_id": ObjectId(project_id)})
+
+    return updated_data
+
+
+# delete a specific project
+@router.delete("/projects/{project_id}", response_model=ProjectDetailResponse)
+async def delete_project(
+    project_id: str,
+    current_user: UserInDB = Depends(get_current_user),
+):
+    project = await projects_collection.find_one({"_id": ObjectId(project_id)})
+
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+
+    if str(project["owner_id"]) != current_user["id"]:
+        raise HTTPException(status_code=403, detail="Unauthorized")
+
+    await projects_collection.delete_one({"_id": ObjectId(project_id)})
+
+    return project
