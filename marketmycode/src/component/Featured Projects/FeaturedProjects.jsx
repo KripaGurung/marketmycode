@@ -30,7 +30,6 @@ const FeaturedProjects = () => {
               </p>
 
               <div className="projectButtons">
-                <button className="viewBtn">View Details</button>
                 <button className="cartBtn">Add to cart</button>
               </div>
             </div>

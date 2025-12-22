@@ -12,7 +12,7 @@ const Navbar = () => {
 
         <ul className="nav-links">
           <li onClick={() => navigate("/home")}>Home</li>
-          <li>Projects</li>
+          <li onClick={() => navigate("/project")}>Projects</li>
           <li>Cart</li>
         </ul>
 

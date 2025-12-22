@@ -7,6 +7,7 @@ import Login from './pages/login/login.jsx';
 import Navbar from './component/Navbar/Navbar.jsx';
 import Home from './pages/home/home.jsx';
 import Footer from "./component/Footer/Footer.jsx"; 
+import Project from './pages/projects/project.jsx';
 
 
 function AppContent() {
@@ -25,6 +26,7 @@ function AppContent() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Home />} />
+         <Route path="/project" element={<Project />} />
         <Route path="*" element={<div className="min-h-screen flex items-center justify-center text-xl text-gray-600">404 - Page Not Found</div>} />
       </Routes>
 

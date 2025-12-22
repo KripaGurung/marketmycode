@@ -30,7 +30,6 @@ const MostViewProjects = () => {
               </p>
 
               <div className="mostProjectButtons">
-                <button className="mostViewBtn">View Details</button>
                 <button className="mostCartBtn">Add to cart</button>
               </div>
             </div>

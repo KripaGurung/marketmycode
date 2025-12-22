@@ -76,15 +76,6 @@
     gap: 10px;
 }
 
-.viewBtn {
-    flex: 1;
-    padding: 8px 0;
-    background: #e8e8e8;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
 .cartBtn {
     flex: 1;
     padding: 8px 0;
