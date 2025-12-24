@@ -1,4 +1,3 @@
-from abc import update_abstractmethods
 from typing import Annotated, List
 
 import jwt
@@ -14,7 +13,7 @@ from auth import (
     oauth2_scheme,
 )
 from bson import ObjectId
-from db import projects_collection, users_collection
+from db import projects_collection, reviews_collection, users_collection
 from fastapi import APIRouter, Body, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from models import (
@@ -27,6 +26,7 @@ from models import (
     RefreshRequest,
     ResetPasswordRequest,
     ResetPasswordResponse,
+    ReviewCreateRequest,
     Token,
     UserInDB,
     signupRequest,
@@ -236,3 +236,30 @@ async def delete_project(
     await projects_collection.delete_one({"_id": ObjectId(project_id)})
 
     return project
+
+
+# Post a Review
+@router.post("/projects/{project_id}/reviews")
+async def post_review(
+    project_id: str,
+    review: ReviewCreateRequest,
+    current_user: UserInDB = Depends(get_current_user),
+):
+    project = await projects_collection.find_one({"_id": ObjectId(project_id)})
+
+    if not project:
+        raise HTTPException(status_code=404, detail="Project not found")
+
+    if str(project["owner_id"]) != current_user["id"]:
+        raise HTTPException(status_code=403, detail="Unauthorized")
+
+    await reviews_collection.insert_one(
+        {
+            "project_id": ObjectId(project_id),
+            "user_id": ObjectId(current_user["id"]),
+            "rating": review.rating,
+            "comment": review.comment,
+        }
+    )
+
+    return {"message": "Review posted successfully"}

@@ -136,3 +136,9 @@ class ProjectUpdateRequest(BaseModel):
     category: Optional[str] = None
     tech_stack: Optional[List[str]] = None
     level: Optional[CourseLevel] = None
+
+
+# projects/id/reviews POST
+class ReviewCreateRequest(BaseModel):
+    rating: float
+    comment: str

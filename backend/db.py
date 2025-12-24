@@ -12,3 +12,4 @@ db = client["marketmycode"]
 
 users_collection = db["users"]
 projects_collection = db["projects"]
+reviews_collection = db["reviews"]
