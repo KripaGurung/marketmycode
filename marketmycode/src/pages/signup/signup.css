@@ -7,30 +7,31 @@
 
 body {
     background: #e3fde7;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
 }
 
 .main-container {
     background: #ffffff;
-    width: 400px;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    width: 440px;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .main-container h2 {
     text-align: center;
     color: #2e7d32;
-    margin-bottom: 1.5rem;
+    font-size: 1.6rem;
+    margin-bottom: 1.8rem;
 }
 
 .steps {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     position: relative;
 }
 
@@ -38,28 +39,26 @@ body {
     content: "";
     position: absolute;
     top: 50%;
-    left: 15px;
-    right: 15px;
+    left: 12px;
+    right: 12px;
     height: 3px;
-    background: #a5d6a7;
-    z-index: 0;
+    background: #c8e6c9;
 }
 
 .steps .step {
+    width: 38px;
+    height: 38px;
     background: #a5d6a7;
-    color: #fff;
-    width: 35px;
-    height: 35px;
+    color: #ffffff;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1;
     font-weight: bold;
-    transition: 0.3s;
+    font-size: 0.95rem;
+    z-index: 1;
 }
 
-.steps .step.start,
 .steps .step.active {
     background: #2e7d32;
 }
@@ -76,7 +75,7 @@ form .formStep.active {
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(6px);
+        transform: translateY(8px);
     }
 
     to {
@@ -88,161 +87,139 @@ form .formStep.active {
 form .formStep h3 {
     text-align: center;
     color: #1b5e20;
+    font-size: 1.25rem;
     margin-bottom: 1rem;
 }
 
 form .formStep label {
-    margin: 10px 0 5px;
+    margin-top: 1rem;
+    text-align: left;
+    margin-left: 10px;
     font-weight: 600;
     color: #333;
+    font-size: 0.95rem;
     display: block;
-    text-align: left;
 }
 
-form .formStep input[type=text],
-form .formStep input[type=email],
-form .formStep input[type=password],
-form .formStep input[type=tel],
+form .formStep input[type="text"],
+form .formStep input[type="email"],
+form .formStep input[type="password"],
+form .formStep input[type="tel"],
 form .formStep select {
     width: 100%;
-    padding: 0.6rem;
-    margin-top: 0.3rem;
+    padding: 0.7rem;
+    margin-top: 0.4rem;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 6px;
     outline: none;
+    font-size: 0.95rem;
 }
 
-form .formStep input[type=text]:focus,
-form .formStep input[type=email]:focus,
-form .formStep input[type=password]:focus,
-form .formStep input[type=tel]:focus,
+form .formStep input:focus,
 form .formStep select:focus {
     border-color: #2e7d32;
 }
 
 .password-wrapper {
     position: relative;
-    display: flex;
-    align-items: center;
 }
 
 .password-wrapper input {
-    width: 100%;
-    padding-right: 40px;
+    padding-right: 42px;
 }
 
 .eye-btn {
     position: absolute;
     right: 10px;
-    margin-top: 5px;
+    top: 50%;
+    transform: translateY(-50%);
     background: none;
     border: none;
     cursor: pointer;
     font-size: 18px;
+    color: #333;
 }
 
 .interests-options {
     margin-top: 1rem;
     display: grid;
-    grid-template-columns: repeat(2, minmax(150px, 1fr));
-    gap: 1rem 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
 }
 
-.interests-options .interest-option {
+.interest-option {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #333;
 }
 
-.interests-options .interest-option input[type=checkbox] {
+.interest-option input[type="checkbox"] {
     width: 18px;
     height: 18px;
     accent-color: #2e7d32;
     cursor: pointer;
-    flex-shrink: 0;
 }
 
-.interests-options .interest-option label {
-    cursor: pointer;
-    margin: 0;
-    user-select: none;
-    display: inline-block;
-}
-
-#skill {
-    margin-top: 0.4rem;
-}
-
-.sign-buttons {
-    display: flex;
-    justify-content: space-between;
+button[type="button-next"],
+button[type="submit"] {
+    width: 100%;
     margin-top: 1.5rem;
-}
-
-.sign-buttons button {
     background: #2e7d32;
-    color: white;
+    color: #ffffff;
     border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 5px;
+    padding: 0.75rem 1.2rem;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background 0.3s;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
-.sign-buttons button:hover {
+button[type="button-next"]:hover,
+button[type="submit"]:hover {
     background: #1b5e20;
 }
 
-.sign-buttons button.prev {
+button[type="button-next"].prev {
+    background: #2e7d32;
+}
+
+button[type="button-next"].prev:hover {
     background: #66bb6a;
 }
 
-.sign-buttons button.prev:hover {
-    background: #388e3c;
+form .formStep.active button[type="button-next"],
+form .formStep.active button[type="submit"] {
+    display: inline-block;
 }
 
-.terms-box {
+form .formStep.active button[type="button-next"]:not(:only-child),
+form .formStep.active button[type="submit"]:not(:only-child) {
+    width: 48%;
+}
+
+form .formStep.active button[type="button-next"]+button[type="button-next"],
+form .formStep.active button[type="button-next"]+button[type="submit"] {
+    float: right;
+}
+
+form .formStep.active::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.login-redirect {
     margin-top: 1.5rem;
-}
-
-.terms-box .terms-text {
-    background: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    padding: 0.9rem;
-    font-size: 0.9rem;
-    color: #444;
-    line-height: 1.5;
-    text-align: justify;
-}
-
-.terms-box .terms-container {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 1rem;
+    text-align: center;
     font-size: 0.9rem;
     color: #333;
 }
 
-.terms-box .terms-container input[type=checkbox] {
-    width: 18px;
-    height: 18px;
-    accent-color: #2e7d32;
-    cursor: pointer;
-    flex-shrink: 0;
-}
-
-.terms-box .terms-container label {
-    cursor: pointer;
-    user-select: none;
-    margin: 0;
-}
-
-.terms-box .terms-container label .terms-link {
+.login-link {
     color: #2e7d32;
-    text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
+    cursor: pointer;
 }
