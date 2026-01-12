@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Annotated, List
 
 import jwt
@@ -253,13 +254,28 @@ async def post_review(
     if str(project["owner_id"]) != current_user["id"]:
         raise HTTPException(status_code=403, detail="Unauthorized")
 
+    created_at = datetime.utcnow()
+
     await reviews_collection.insert_one(
         {
             "project_id": ObjectId(project_id),
             "user_id": ObjectId(current_user["id"]),
             "rating": review.rating,
             "comment": review.comment,
+            "created_at": created_at,
         }
     )
 
-    return {"message": "Review posted successfully"}
+    return {"success": True, "message": "Review posted successfully"}
+
+
+# Get reviews
+@router.get("/projects/{project_id}/reviews")
+async def get_reviews(
+    project_id: str,
+):
+    reviews = await reviews_collection.find(
+        {"project_id": ObjectId(project_id)}
+    ).to_list(None)
+
+    return reviews
