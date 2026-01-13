@@ -1,56 +1,46 @@
 .nav-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    width: 60%;
-    margin: 0 auto;
-    right: 0;
-    top: 40px;
-    border-bottom: 1px solid #ddd;
-    padding: 0 20px;
+    position: relative;
+    margin: 30px auto 0;
+    z-index: 10;
+    width: 1200px;
+    max-width: 90%;
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #e0e0e0;
+    padding: 0 28px;
     height: 70px;
-    box-sizing: border-box;
     display: flex;
     align-items: center;
-
 }
 
 .nav-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
     width: 100%;
-    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .Logo {
-    height: 50px;
-    width: auto;
+    height: 46px;
     cursor: pointer;
-    flex-shrink: 0;
 }
 
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 40px;
+    gap: 36px;
     margin: 0;
     padding: 0;
+
     font-weight: 600;
-    flex-grow: 1;
-    justify-content: center;
+    letter-spacing: 1px;
 }
 
 .nav-links li {
     cursor: pointer;
-    padding: 10px 0;
-    color: #333;
-    font-size: 16px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
+    font-size: 14px;
+    color: #222;
+    transition: color 0.25s ease;
 }
 
 .nav-links li:hover {
@@ -60,100 +50,33 @@
 .nav-section {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    flex-shrink: 0;
 }
 
-.Button {
-    background-color: #2e7d32;
-    color: white;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    min-width: 100px;
-    transition: all 0.3s ease;
-}
-
-.Button:hover {
-    background-color: #008236;
-    transform: translateY(-2px);
-}
-
-.hero {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 60px 0;
-    background: #e3fde7;
-    padding-top: 90px;
-    margin-top: 70px;
-}
-
-.hero-card {
-    width: 1200px;
-    min-height: 450px;
-    background: #fff;
+.nav-auth {
     display: flex;
     align-items: center;
-    border-radius: 20px;
-    padding: 50px 60px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
-    gap: 40px;
-}
+    gap: 8px;
 
-.hero-left {
-    flex: 1;
-    max-width: 550px;
-}
-
-.hero-left h1 {
-    font-size: 36px;
-    font-weight: 700;
-    color: #0e5c35;
-    margin-bottom: 20px;
-}
-
-.hero-left p {
-    font-size: 15px;
-    color: #444;
-    line-height: 1.6;
-    margin-bottom: 30px;
-}
-
-.hero-actions {
-    display: flex;
-    gap: 15px;
-}
-
-.btn-primary {
-    background: #0e5c35;
-    color: #fff;
-    padding: 10px 25px;
-    border-radius: 8px;
-    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #222;
     cursor: pointer;
 }
 
-.btn-outline {
-    padding: 10px 25px;
-    background: transparent;
-    border: 2px solid #0e5c35;
-    color: #0e5c35;
-    border-radius: 8px;
-    cursor: pointer;
+.nav-auth svg {
+    color: #2e7d32;
 }
 
-.hero-right {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+.nav-auth span {
+    white-space: nowrap;
 }
 
-.hero-right img {
-    width: 430px;
-    max-width: 100%;
-    object-fit: contain;
+.nav-auth svg:last-child {
+    margin-left: 4px;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.nav-auth svg:last-child:hover {
+    transform: translateX(3px);
+    color: #d32f2f;
 }
