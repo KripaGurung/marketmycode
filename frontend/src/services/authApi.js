@@ -18,4 +18,11 @@ const signupUser = (data) => {
   return axios.post(`${BASE_URL}/auth/signup`, data);
 };
 
-export default {signupUser, loginUser};
+const forgotPassword = (email) => {
+  return axios.post(`${BASE_URL}/auth/forget-password`, {
+    email: email,
+  });
+};
+
+
+export default {signupUser, loginUser, forgotPassword};

@@ -8,100 +8,80 @@ import { toast } from "react-toastify";
 import "./login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState(""); // value = username
-  const [password, setPassword] = useState("");
-  const [showPopup, setShowPopup] = useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [showPopup, setShowPopup] = useState(false);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+        if (!username || !password) {
+            toast.error("Please enter username and password");
+            return;
+        }
 
-    if (!email || !password) {
-      toast.error("Please enter username and password");
-      return;
-    }
+        try {
+            const response = await authApi.loginUser(username, password);
+        
+            const { token, refresh_token, user_id } = response.data.data;
 
-    try {
-      // 🔹 email variable actually holds USERNAME
-      const res = await authApi.loginUser(email, password);
+            dispatch(
+                setLogin({ userId: user_id, token: token })
+            );
+        
+            localStorage.setItem("token", token);
+            localStorage.setItem("refresh_token", refresh_token);
+            localStorage.setItem("user_id", user_id);
 
-      const { token, refresh_token, user_id } = res.data.data;
+            toast.success("Login successful!");
+            navigate("/home");
+        } catch (error) {
+            toast.error(
+                error.response?.data?.error || "Invalid username or password"
+            );
+        }
+    };
+    
+    return (
+        <div className="main-container">
+            <h1>Welcome Back!</h1>
 
-      dispatch(
-        setLogin({
-          userId: user_id,
-          token: token,
-        })
-      );
+            <form id="login-form" onSubmit={handleSubmit}>
+                
+                <div className="form-container">
+                    
+                    <label>Username</label>
+                    <input type="text" placeholder="Enter Your Username" required value={username} onChange={(e) => setUsername(e.target.value)} />
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("refresh_token", refresh_token);
-      localStorage.setItem("user_id", user_id);
+                    <label>Password</label>
+                    <input type="password" placeholder="Enter Your Password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
 
-      toast.success("Login successful!");
-      navigate("/home");
-    } catch (error) {
-      toast.error(
-        error.response?.data?.error || "Invalid username or password"
-      );
-    }
-  };
+                <div className="remember-forgot">
+                
+                    <label>
+                        <input type="checkbox" /> Remember me
+                    </label>
 
-  return (
-    <div className="main-container">
-      <h1>Welcome Back!</h1>
+                    <span className="forgot-link" onClick={() => setShowPopup(true)}> Forgot password? </span>
+                </div>
 
-      <form id="login-form" onSubmit={handleSubmit}>
-        <div className="form-container">
-          {/* 🔴 Email → Username */}
-          <label>Username</label>
-          <input
-            type="text"
-            placeholder="Enter Your Username"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+                <div className="buttons">
+                    <button type="submit">Login</button>
+                </div>
 
-          <label>Password</label>
-          <input
-            type="password"
-            placeholder="Enter Your Password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+                <p> Don't have an account?{" "}
+
+                    <span onClick={() => navigate("/signup")} className="login-link">Register</span>
+
+                </p>
+            </form>
+
+            {showPopup && ( <ForgotPasswordPopup onClose={() => setShowPopup(false)} /> )}
         </div>
-
-        <div className="remember-forgot">
-          <label>
-            <input type="checkbox" /> Remember me
-          </label>
-
-          <span className="forgot-link" onClick={() => setShowPopup(true)}>
-            Forgot password?
-          </span>
-        </div>
-
-        <div className="buttons">
-          <button type="submit">Login</button>
-        </div>
-
-        <p>
-          Don't have an account?{" "}
-          <span onClick={() => navigate("/signup")} className="login-link">
-            Register
-          </span>
-        </p>
-      </form>
-
-      {showPopup && (
-        <ForgotPasswordPopup onClose={() => setShowPopup(false)} />
-      )}
-    </div>
-  );
+    );
 };
 
 export default Login;
