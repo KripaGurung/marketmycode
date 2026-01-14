@@ -28,17 +28,32 @@ class User(BaseModel):
     username: str
     email: str
     fullname: str
+    phone: str
+    country: str
+    preference: List[str]
+    level: UserLevel
 
 
 class UserInDB(User):
     hashed_password: str
 
 
+class UserLevel(str, Enum):
+    BEGINNER = "Beginner"
+    INTERMEDIATE = "Intermediate"
+    PROFESSIONAL = "Professional"
+
+
+# Signup Request Model
 class signupRequest(BaseModel):
     username: str
     email: EmailStr
     fullname: str
     password: str
+    phone: str
+    country: str
+    preference: List[str]
+    level: UserLevel 
 
 
 class signupResponse(BaseModel):

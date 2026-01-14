@@ -98,6 +98,15 @@ Errors:
   "password": "12345678"
 }
 ```
+<!-- Updated One with extra info -->
+<!-- username: str
+    email: EmailStr
+    fullname: str
+    password: str
+    phone: str
+    country: str
+    preference: List[str]
+    level: UserLevel  -->
 
 **Response**
 ```json
