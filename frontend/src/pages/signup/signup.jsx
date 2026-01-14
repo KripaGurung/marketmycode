@@ -88,7 +88,8 @@ const Register = () => {
 
   try {
     await signupUser.signupUser(payload); 
-    toast.success("Registration successful! Please login.");
+    toast.success("Registration successful!");
+    console.log("SIGNUP SUCCESS");
     dispatch(resetForm());
     navigate("/");
   } catch (error) {

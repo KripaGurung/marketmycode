@@ -1,6 +1,6 @@
 .nav-container {
     position: relative;
-    margin: 30px auto 0;
+    margin: 15px auto 0;
     z-index: 10;
     width: 1200px;
     max-width: 90%;
@@ -31,7 +31,6 @@
     gap: 36px;
     margin: 0;
     padding: 0;
-
     font-weight: 600;
     letter-spacing: 1px;
 }
@@ -56,7 +55,6 @@
     display: flex;
     align-items: center;
     gap: 8px;
-
     font-size: 14px;
     font-weight: 500;
     color: #222;
@@ -79,4 +77,51 @@
 .nav-auth svg:last-child:hover {
     transform: translateX(3px);
     color: #d32f2f;
+}
+
+/* ============================= */
+/* 🔒 PASSWORD ALIGNMENT FIX */
+/* ============================= */
+
+input {
+    font-family: inherit;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* HARD RESET FOR PASSWORD INPUT */
+input[type="password"],
+input[type="text"],
+input[type="email"] {
+    height: 44px;
+    padding: 0 44px 0 14px;
+    /* right space for eye */
+    line-height: normal;
+    /* 🔥 IMPORTANT */
+    display: flex;
+    /* 🔥 FIX baseline jump */
+    align-items: center;
+    /* 🔥 vertical centering */
+    border-radius: 6px;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* wrapper must control centering */
+.password-wrapper,
+.input-wrapper,
+.form-group {
+    position: relative;
+}
+
+.password-wrapper svg,
+.input-wrapper svg,
+.form-group svg {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: auto;
 }

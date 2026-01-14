@@ -17,12 +17,13 @@ const Navbar = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("user_id");
-    localStorage.removeItem("username");
+    localStorage.removeItem("name");
     navigate("/");
   };
 
   return (
     <div className="nav-container">
+      
       <nav className="nav-bar">
         <img onClick={() => navigate("/home")} src="/logo.png" alt="Logo" className="Logo" />
 
@@ -34,12 +35,15 @@ const Navbar = () => {
 
         <div className="nav-section">
           {!isLoggedIn ? (
-
             <div className="nav-auth" onClick={() => navigate("/")} >
+
               <FaUserCircle size={22} />
               <span>Login</span>
+
             </div>
+
           ) : (
+            
             <div className="nav-auth">
               <FaUserCircle size={26} />
               <span>{name || "User"}</span>
