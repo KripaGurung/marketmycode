@@ -47,14 +47,18 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
 
-    access_token = create_access_token({"sub": user["username"]})
+    access_token = create_access_token(
+        {"sub": user["username"], "fullname": user["fullname"]}
+    )
     refresh_token = create_refresh_token({"sub": user["username"]})
     user_id = str(user["id"])
+    fullName = user["fullname"]
 
     return {
         "success": True,
         "data": {
             "user_id": user_id,
+            "fullname": fullName,
             "token": access_token,
             "refresh_token": refresh_token,
         },
@@ -74,8 +78,12 @@ async def signup(data: signupRequest):
     )
     result = await users_collection.insert_one(user.model_dump())
     user_id = str(result.inserted_id)
-    access_token = create_access_token(data={"sub": user.username})
-    refresh_token = create_refresh_token(data={"sub": user.username})
+    access_token = create_access_token(
+        data={"sub": user.username, "fullname": user.fullname}
+    )
+    refresh_token = create_refresh_token(
+        data={"sub": user.username, "fullname": user.fullname}
+    )
 
     return {
         "success": True,
@@ -92,12 +100,12 @@ async def refresh(refresh_token: RefreshRequest):
     try:
         payload = decode_token(refresh_token.refresh_token)
         username = payload.get("sub")
-        print("USERNAME", username)
-        print("TOKEN", username)
+        fullname = payload.get("fullname")
+
         if username is None:
             raise HTTPException(status_code=400, detail="Invalid token")
 
-        access_token = create_access_token(data={"sub": username})
+        access_token = create_access_token(data={"sub": username, "fullname": fullname})
         return {
             "success": True,
             "data": {

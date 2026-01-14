@@ -1,20 +1,6 @@
-import os
+token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJuZXdwYW5lIiwiZnVsbG5hbWUiOiJzYWdhciBuZXdwYW5lIiwiZXhwIjoxNzY4Mzc1NzM2fQ.pM9aU4qY6v3D2MRqgnvdCCsIdssdnfIpmZtbIukbZ8Y"
 
-import resend
+from auth import decode_token
 
-resend.api_key = "api_key "
-
-params = {
-    "from": "onboarding@resend.dev",
-    "to": ["np03cs4a220493@heraldcollege.edu.np"],
-    'template': {
-        'id': "untitled-template",
-        "variables": {
-            "url": f"https://example.com/{}",
-            "user": f"{user}"
-        }
-    }
-}
-
-email = resend.Emails.send(params)
-print(email)
+user = decode_token(token)
+print(user)
