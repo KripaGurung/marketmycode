@@ -21,29 +21,47 @@
 }
 
 .Logo {
-    height: 46px;
+    height: 48px;
     cursor: pointer;
 }
 
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 36px;
+    gap: 42px;
     margin: 0;
     padding: 0;
     font-weight: 600;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 }
 
 .nav-links li {
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     color: #222;
+    position: relative;
+    padding-bottom: 6px;
     transition: color 0.25s ease;
 }
 
 .nav-links li:hover {
     color: #2e7d32;
+}
+
+.nav-links li::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 3px;
+    background-color: #2e7d32;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+.nav-links li:hover::after {
+    width: 100%;
 }
 
 .nav-section {
@@ -54,34 +72,34 @@
 .nav-auth {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    font-weight: 500;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
     color: #222;
     cursor: pointer;
 }
 
-.nav-auth svg {
+.nav-auth svg:first-child {
     color: #2e7d32;
 }
 
 .nav-auth span {
     white-space: nowrap;
+    font-size: 15px;
 }
 
 .nav-auth svg:last-child {
-    margin-left: 4px;
-    transition: transform 0.2s ease, color 0.2s ease;
+    margin-left: 8px;
+    font-size: 22px; 
+    color: #d32f2f;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .nav-auth svg:last-child:hover {
-    transform: translateX(3px);
-    color: #d32f2f;
+    transform: scale(1.2);
+    opacity: 0.85;
 }
-
-/* ============================= */
-/* 🔒 PASSWORD ALIGNMENT FIX */
-/* ============================= */
 
 input {
     font-family: inherit;
@@ -89,27 +107,18 @@ input {
     box-sizing: border-box;
 }
 
-/* HARD RESET FOR PASSWORD INPUT */
 input[type="password"],
 input[type="text"],
 input[type="email"] {
     height: 44px;
     padding: 0 44px 0 14px;
-    /* right space for eye */
-    line-height: normal;
-    /* 🔥 IMPORTANT */
     display: flex;
-    /* 🔥 FIX baseline jump */
     align-items: center;
-    /* 🔥 vertical centering */
     border-radius: 6px;
-
     -webkit-appearance: none;
-    -moz-appearance: none;
     appearance: none;
 }
 
-/* wrapper must control centering */
 .password-wrapper,
 .input-wrapper,
 .form-group {
@@ -123,5 +132,4 @@ input[type="email"] {
     right: 14px;
     top: 50%;
     transform: translateY(-50%);
-    pointer-events: auto;
 }

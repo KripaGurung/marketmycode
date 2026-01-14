@@ -2,65 +2,76 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 60px 0;
+    padding: 30px 0;
     background: #e3fde7;
 }
 
 .hero-card {
     width: 90%;
-    min-height: 550px;
-    margin-top: 20px;
-    margin-bottom: 40px;
+    min-height: 420px;
+    margin-top: 10px;
+    margin-bottom: 25px;
     background: #fff;
     display: flex;
     align-items: center;
-    border-radius: 20px;
-    padding: 50px 60px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
-    gap: 40px;
+    border-radius: 18px;
+    padding: 35px 45px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    gap: 30px;
 }
 
 .hero-left {
     flex: 1;
-    max-width: 550px;
-    margin-left: 50px;
+    max-width: 520px;
+    margin-left: 30px;
 }
 
 .hero-left h1 {
-    font-size: 40px;
+    font-size: 32px;
     font-weight: 700;
     color: #0e5c35;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .hero-left p {
-    font-size: 20px;
+    font-size: 16px;
     color: #444;
-    line-height: 1.8;
-    margin-bottom: 30px;
+    line-height: 1.6;
+    margin-bottom: 24px;
 }
 
 .hero-actions {
     display: flex;
-    gap: 15px;
+    gap: 14px;
 }
 
 .btn-primary {
     background: #0e5c35;
     color: #fff;
-    padding: 10px 25px;
+    padding: 9px 22px;
     border-radius: 8px;
     border: none;
+    font-size: 14px;
     cursor: pointer;
 }
 
 .btn-outline {
-    padding: 10px 25px;
+    padding: 9px 22px;
     background: transparent;
     border: 2px solid #0e5c35;
     color: #0e5c35;
     border-radius: 8px;
+    font-size: 14px;
     cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #0b4a2b;
+}
+
+.btn-outline:hover {
+    background-color: #0e5c35;
+    color: #ffffff;
 }
 
 .hero-right {
@@ -70,7 +81,7 @@
 }
 
 .hero-right img {
-    width: 430px;
+    width: 360px;
     max-width: 100%;
     object-fit: contain;
 }
