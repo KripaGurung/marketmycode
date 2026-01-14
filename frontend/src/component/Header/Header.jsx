@@ -23,7 +23,7 @@ const Header = () => {
           </p>
 
           <div className="hero-actions">
-            <button className="btn-primary" onClick={() => navigate("/projects")}> Explore Projects </button>
+            <button className="btn-primary" onClick={() => navigate("/project")}> Explore Projects </button>
             <button className="btn-outline" onClick={() => navigate("/create")}>  Start Creating </button>
           </div>
         </div>

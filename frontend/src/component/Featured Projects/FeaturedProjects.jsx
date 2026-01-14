@@ -1,8 +1,10 @@
 import React from "react";
 import "./FeaturedProjects.css";
+import { useNavigate } from "react-router-dom";
 
 const FeaturedProjects = () => {
   const projects = [1, 2, 3, 4]; 
+  const navigate = useNavigate();
 
   return (
     <div className="featuredSection">
@@ -38,7 +40,7 @@ const FeaturedProjects = () => {
       </div>
 
       <div className="viewAllSection">
-        <button className="viewAllBtn">View All Projects →</button>
+        <button className="viewAllBtn" onClick={() => navigate("/project")}>View All Projects →</button>
       </div>
     </div>
   );
