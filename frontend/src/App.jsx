@@ -8,6 +8,7 @@ import Navbar from './component/Navbar/Navbar.jsx';
 import Home from './pages/home/home.jsx';
 import Footer from "./component/Footer/Footer.jsx"; 
 import Project from './pages/projects/project.jsx';
+import Create from './pages/upload/create.jsx';
 
 function AppContent() {
   const location = useLocation();
@@ -27,6 +28,7 @@ function AppContent() {
         <Route path="/signup" element={ isLoggedIn ? <Navigate to="/home" replace /> : <Signup /> } />
         <Route path="/home" element={ isLoggedIn ? <Home /> : <Navigate to="/" replace /> } />
         <Route path="/project" element={ isLoggedIn ? <Project /> : <Navigate to="/" replace /> } />
+        <Route path="/upload" element={isLoggedIn ? <Create /> : <Navigate to="/" />} />
 
         <Route path="*" element={ <div className="min-h-screen flex items-center justify-center text-xl text-gray-600"> 404 - Page Not Found </div> } />
 
