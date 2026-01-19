@@ -31,7 +31,7 @@ const Navbar = () => {
           <li onClick={() => navigate("/project")}>Projects</li>
           <li>Cart</li>
         </ul>
-
+        
         <div className="nav-section">
           {!isLoggedIn ? (
             <div className="nav-auth" onClick={() => navigate("/")}>
@@ -39,10 +39,11 @@ const Navbar = () => {
               <span>Login</span>
             </div>
           ) : (
-            <div className="nav-auth">
+          
+            <div className="nav-auth" onClick={() => navigate("/profile")} style={{ cursor: "pointer" }}>
               <FaUserCircle size={26} />
               <span>{name || "User"}</span>
-              <FaSignOutAlt onClick={handleLogout} />
+              <FaSignOutAlt onClick={(e) => { e.stopPropagation(); handleLogout()}}/>
             </div>
           )}
         </div>

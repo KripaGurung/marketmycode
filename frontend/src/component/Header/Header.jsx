@@ -24,7 +24,7 @@ const Header = () => {
 
           <div className="hero-actions">
             <button className="btn-primary" onClick={() => navigate("/project")}> Explore Projects </button>
-            <button className="btn-outline" onClick={() => navigate("/create")}>  Start Creating </button>
+            <button className="btn-outline" onClick={() => navigate("/upload")}>  Start Creating </button>
           </div>
         </div>
 
