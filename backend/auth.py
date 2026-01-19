@@ -77,27 +77,23 @@ async def authenticate_user(users_collection, username: str, password: str):
 async def get_current_user(
     token: Annotated[str, Depends(oauth2_scheme)],
 ):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
     try:
         payload = decode_token(token)
-        username = payload.get("sub")
-
+        username: str = payload.get("sub")
         if username is None:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
-            )
-
-        user_dict = await users_collection.find_one({"username": username})
-        if user_dict["username"] == username:
-            user_dict["id"] = str(user_dict["_id"])
-            return user_dict
-
-        # If loop finishes without finding user
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
-        )
-
+            raise credentials_exception
     except InvalidTokenError:
-        # If JWT library fails (expired, fake signature, etc)
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
-        )
+        raise credentials_exception
+
+    user_dict = await users_collection.find_one({"username": username})
+    if user_dict is None:
+        raise credentials_exception
+
+    user_dict["id"] = str(user_dict["_id"])
+    del user_dict["_id"]
+    return user_dict

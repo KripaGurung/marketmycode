@@ -1,6 +1,6 @@
 from abc import update_abstractmethods
 from typing import Annotated, List
-
+from fastapi import BackgroundTasks
 import jwt
 from auth import (
     ALGORITHM,
@@ -125,21 +125,23 @@ def logout():
     pass
 
 
-@auth_router.get("/test/me")
-def test(current_user: Annotated[UserModel, Depends(oauth2_scheme)]):
-    user = get_current_user(token=current_user)
-    return user
+
+@router.get("/users/me", response_model=UserModel)
+async def read_current_user(current_user: dict = Depends(get_current_user)):
+    return current_user
+
 
 
 # Forget Password Route
 @auth_router.post("/forget-password")
-async def forget_password(request: ForgetPasswordRequest):
+async def forget_password(request: ForgetPasswordRequest, background_tasks: BackgroundTasks):
     user = await users_collection.find_one({"email": request.email})
     if user is None:
         raise HTTPException(status_code=404, detail="User not Found!")
     else:
         token = create_access_token(data={"sub": user["email"]})
-        sendMail(user["email"], token)
+        # Add the task to the background
+        background_tasks.add_task(sendMail, user["email"], token)
         return {"success": True, "message": "Password reset email sent!"}
 
 
