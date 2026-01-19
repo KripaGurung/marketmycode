@@ -74,6 +74,10 @@ async def signup(data: signupRequest):
         username=data.username,
         fullname=data.fullname,
         email=data.email,
+        phone=data.phone,
+        country=data.country,
+        preference=data.preference,
+        level=data.level,
         hashed_password=hashed_password,
     )
     result = await users_collection.insert_one(user.model_dump())

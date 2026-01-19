@@ -11,7 +11,7 @@ base_url = "http://localhost:8000/auth"
 
 def sendMail(user, token):
     params = {
-        "from": "onboarding@resend.dev",
+        "from": "reset@mail.sagarnewpane.com.np",
         "to": [user],
         "template": {
             "id": "marketmycode",
