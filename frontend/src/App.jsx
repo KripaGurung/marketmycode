@@ -9,6 +9,7 @@ import Home from './pages/home/home.jsx';
 import Footer from "./component/Footer/Footer.jsx"; 
 import Project from './pages/projects/project.jsx';
 import Create from './pages/upload/create.jsx';
+import Profile from './pages/profile/profile.jsx';
 
 function AppContent() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function AppContent() {
         <Route path="/home" element={ isLoggedIn ? <Home /> : <Navigate to="/" replace /> } />
         <Route path="/project" element={ isLoggedIn ? <Project /> : <Navigate to="/" replace /> } />
         <Route path="/upload" element={isLoggedIn ? <Create /> : <Navigate to="/" />} />
+        <Route path="/profile" element={ isLoggedIn ? <Profile /> : <Navigate to="/" replace /> } />
 
         <Route path="*" element={ <div className="min-h-screen flex items-center justify-center text-xl text-gray-600"> 404 - Page Not Found </div> } />
 

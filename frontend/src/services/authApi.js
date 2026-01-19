@@ -24,5 +24,11 @@ const forgotPassword = (email) => {
   });
 };
 
-
-export default {signupUser, loginUser, forgotPassword};
+const getMe = (token) => {
+  return axios.get(`${BASE_URL}/auth/test/me`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+export default {signupUser, loginUser, forgotPassword, getMe};
