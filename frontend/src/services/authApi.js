@@ -25,7 +25,7 @@ const forgotPassword = (email) => {
 };
 
 const getMe = (token) => {
-  return axios.get(`${BASE_URL}/auth/test/me`, {
+  return axios.get(`${BASE_URL}/users/me`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
