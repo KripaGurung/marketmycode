@@ -2,9 +2,9 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:8000";
 
-const loginUser = (email, password) => {
+const loginUser = (username, password) => {
   const formData = new URLSearchParams();
-  formData.append("username", email);
+  formData.append("username", username);
   formData.append("password", password);
 
   return axios.post(`${BASE_URL}/auth/login`, formData, {
@@ -31,4 +31,5 @@ const getMe = (token) => {
     },
   });
 };
-export default {signupUser, loginUser, forgotPassword, getMe};
+
+export default { signupUser, loginUser, forgotPassword, getMe };

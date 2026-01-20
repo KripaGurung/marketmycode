@@ -25,25 +25,32 @@ const Login = () => {
 
     try {
       const res = await authApi.loginUser(username, password);
-      const { token, refresh_token, user_id, fullname } = res.data.data;
 
-      const user = {
-        id: user_id,
-        fullname: fullname,
-      };
+      if (res?.data?.success) {
+        const { token, refresh_token, user_id, fullname } = res.data.data;
 
-      dispatch(setLogin({ token, user }));
+        const user = {
+          id: user_id,
+          fullname: fullname,
+        };
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("refresh_token", refresh_token);
-      localStorage.setItem("user", JSON.stringify(user));
+        dispatch(setLogin({ token, user }));
 
-      toast.success("Login successful!");
-      navigate("/home");
+        localStorage.setItem("token", token);
+        localStorage.setItem("refresh_token", refresh_token);
+        localStorage.setItem("user", JSON.stringify(user));
 
+        toast.success("Login successful!");
+        console.log("login successfully");
+        navigate("/home");
+      }
     } catch (error) {
+      console.log("LOGIN ERROR:", error.response?.data);
+
       toast.error(
-        error.response?.data?.error || "Invalid username or password"
+        error.response?.data?.error ||
+        error.response?.data?.detail?.[0]?.msg ||
+        "Invalid username or password"
       );
     }
   };
@@ -55,17 +62,32 @@ const Login = () => {
       <form id="login-form" onSubmit={handleSubmit}>
         <div className="form-container">
           <label>Username</label>
-          <input type="text" placeholder="Enter Your Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+          <input
+            type="text"
+            placeholder="Enter Your Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
 
           <label>Password</label>
-          <input type="password" placeholder="Enter Your Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input
+            type="password"
+            placeholder="Enter Your Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
 
         <div className="remember-forgot">
           <label>
             <input type="checkbox" /> Remember me
           </label>
-          <span className="forgot-link" onClick={() => setShowPopup(true)}> Forgot password? </span>
+          <span
+            className="forgot-link"
+            onClick={() => setShowPopup(true)}
+          >
+            Forgot password?
+          </span>
         </div>
 
         <div className="buttons">
@@ -74,11 +96,18 @@ const Login = () => {
 
         <p>
           Don't have an account?{" "}
-          <span onClick={() => navigate("/signup")} className="login-link" > Register </span>
+          <span
+            onClick={() => navigate("/signup")}
+            className="login-link"
+          >
+            Register
+          </span>
         </p>
       </form>
 
-      {showPopup && ( <ForgotPasswordPopup onClose={() => setShowPopup(false)} /> )}
+      {showPopup && (
+        <ForgotPasswordPopup onClose={() => setShowPopup(false)} />
+      )}
     </div>
   );
 };
