@@ -3,14 +3,9 @@ import axios from "axios";
 const BASE_URL = "http://localhost:8000";
 
 const loginUser = (username, password) => {
-  const formData = new URLSearchParams();
-  formData.append("username", username);
-  formData.append("password", password);
-
-  return axios.post(`${BASE_URL}/auth/login`, formData, {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
+  return axios.post(`${BASE_URL}/auth/login`, {
+    username: username,
+    password: password,
   });
 };
 
